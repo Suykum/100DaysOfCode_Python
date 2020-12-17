@@ -1,43 +1,39 @@
-from turtle import Turtle, Screen
+import colorgram
+import turtle as turtle_mode
 import random
 
-timmy = Turtle()
+def extract_colors_from_image(image_name, number_of_colors):
+    colors = colorgram.extract(image_name, number_of_colors)
+    rgb_colors = []
+    for color in colors:
+        r = color.rgb.r
+        g = color.rgb.g
+        b = color.rgb.b
+        new_color = (r, g, b)
+        rgb_colors.append(new_color)
+    return rgb_colors
 
-colours = ["CornflowerBlue", "DarkOrchid", "IndianRed", "DeepSkyBlue", "LightSeaGreen", "wheat", "SlateGray",
-           "SeaGreen"]
-
-
-def draw_hexagon():
-    timmy.shape("classic")
-    num_sides = 2
-    while num_sides <= 8:
-        timmy.color(random.choice(colours))
-        for _ in range(num_sides):
-            angle = 360 / num_sides
-            timmy.forward(100)
-            timmy.right(angle)
-        num_sides += 1
-
-
-def draw_random_walk():
-    directions = [0, 90, 180, 270]
-    timmy.pensize(10)
-    timmy.speed("fastest")
-    for _ in range(200):
-        timmy.forward(30)
-        timmy.color(random.choice(colours))
-        timmy.setheading(random.choice(directions))
-
-
-def spiriograph(size_of_gap):
-    timmy.speed("fastest")
-    for n in range(int(360 / size_of_gap)):
-        timmy.color(random.choice(colours))
-        timmy.circle(100)
-        timmy.setheading(timmy.heading() + size_of_gap)
+#colorgram.extract('hirst.jpg', 30)
+color_list = [(244, 231, 217), (208, 151, 103), (245, 226, 234), (218, 230, 239), (226, 241, 234), (58, 105, 133), (148, 87, 58), (128, 163, 185), (196, 137, 157), (138, 71, 95), (210, 91, 67), (130, 177, 155), (60, 120, 89), (162, 149, 54), (191, 91, 118), (224, 201, 126), (25, 48, 75), (78, 157, 122), (55, 41, 27), (232, 166, 185), (40, 56, 105), (238, 170, 159), (56, 33, 47), (58, 155, 172), (115, 37, 58), (105, 121, 164), (27, 51, 39), (160, 210, 190), (17, 95, 71), (117, 42, 33)]
+turtle_mode.colormode(255)
+tim = turtle_mode.Turtle()
+tim.speed("fast")
+tim.penup()
+tim.hideturtle()
+tim.setheading(225)
+tim.forward(300)
+tim.setheading(0)
+number_of_dots = 101
+for dot_count in range(1, number_of_dots):
+    tim.dot(20, random.choice(color_list))
+    tim.forward(50)
+    if dot_count % 10 == 0:
+        tim.setheading(90)
+        tim.forward(50)
+        tim.setheading(180)
+        tim.forward(500)
+        tim.setheading(0)
 
 
-spiriograph(20)
-
-screen = Screen()
+screen = turtle_mode.Screen()
 screen.exitonclick()
