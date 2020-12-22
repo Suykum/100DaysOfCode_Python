@@ -9,6 +9,10 @@ while is_continue:
     if user_input == "Q":
         is_continue = False
     else:
-        words = [data_dict[letter] for letter in user_input]
-        print(words)
+        try:
+            words = [data_dict[letter] for letter in user_input]
+        except KeyError:
+            print("Sorry, only letters in the alphabet please")
+        else:
+            print(words)
 
