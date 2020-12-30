@@ -5,9 +5,6 @@ import requests
 
 app = Flask(__name__)
 
-GENDERIZE_endpoint = "https://api.genderize.io?name=peter"
-AGIFY_ENDPOINT = "https://api.agify.io?name=michael"
-
 
 @app.route('/')
 def hello_world():
@@ -17,13 +14,21 @@ def hello_world():
 
 
 @app.route("/guess/<name>")
-def genderize_agify(name):
-    parameters = {"name": name}
-    gender_result = requests.get(url=GENDERIZE_endpoint, json=parameters).json()
+def guess(name):
+    gender_result = requests.get(url=f"https://api.genderize.io?name={name}").json()
     gender = gender_result["gender"]
-    age_result = requests.get(url=AGIFY_ENDPOINT, json=parameters).json()
+    age_result = requests.get(f"https://api.agify.io?name={name}").json()
     age = age_result["age"]
-    return render_template("gender_age.html", name=name, gender=gender, age=age)
+    return render_template("guess.html", name=name, gender=gender, age=age)
+
+
+@app.route("/blog")
+def get_blog():
+    blog_url = "https://api.npoint.io/5abcca6f4e39b4955965"
+    response = requests.get(blog_url)
+    all_posts = response.json()
+    print(all_posts)
+    return render_template("blog.html", posts=all_posts)
 
 
 if __name__ == "__main__":
