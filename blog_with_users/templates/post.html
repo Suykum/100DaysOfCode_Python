@@ -1,5 +1,5 @@
 {% include "header.html" %}
-
+{% import "bootstrap/wtf.html" as wtf %}
   <!-- Page Header -->
   <header class="masthead" style="background-image: url('{{post.img_url}}')">
     <div class="overlay"></div>
@@ -42,7 +42,7 @@
               <ul class="commentList">
                 <li>
                     <div class="commenterImage">
-                      <img src="{{comment.comment_author.email | gravatar }}"/>
+                      <img src="{{ comment.comment_author.email | gravatar }}"/>
                     </div>
                     <div class="commentText">
                       {{comment.text | safe}}

@@ -62,6 +62,8 @@ class Comment(db.Model):
     parent_post = relationship("BlogPost", back_populates="comments")
     comment_author = relationship("User", back_populates="comments")
     text = db.Column(db.Text, nullable=False)
+
+
 db.create_all()
 
 
@@ -133,7 +135,11 @@ def logout():
     return redirect(url_for('get_all_posts'))
 
 
-@app.route("/post/<int:post_id>")
+gravatar = Gravatar(app, size=100, rating='g', default='retro', force_default=False, force_lower=False, use_ssl=False,
+                    base_url=None)
+
+
+@app.route("/post/<int:post_id>", methods=["GET", "POST"])
 def show_post(post_id):
     form = CommentForm()
     requested_post = BlogPost.query.get(post_id)
@@ -153,7 +159,6 @@ def show_post(post_id):
     return render_template("post.html", post=requested_post, form=form, current_user=current_user)
 
 
-
 @app.route("/about")
 def about():
     return render_template("about.html", current_user=current_user)
@@ -164,7 +169,7 @@ def contact():
     return render_template("contact.html", current_user=current_user)
 
 
-@app.route("/new-post")
+@app.route("/new-post", methods=["GET", "POST"])
 @admin_only
 def add_new_post():
     form = CreatePostForm()
